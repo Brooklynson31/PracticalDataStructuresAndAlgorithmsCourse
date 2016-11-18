@@ -20,7 +20,7 @@ public class BinarySearchApp {
 		while(p <= r){
 			q = (p+r)/2; //middle index of array
 			if(array[q] == value)
-				return array[q];
+				return q;
 			if(array[q] > value) //if middle of array is greater than value
 				r = q-1; 
 			else{
