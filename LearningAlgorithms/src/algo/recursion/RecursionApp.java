@@ -11,7 +11,7 @@ public class RecursionApp {
 		System.out.println(recursiveLinearSearch(array, i, 31));
 		
 		int[] array2 = new int[] {5,10,12,22,31,34,56,72};
-		System.out.println(recursiveBinarySearch(array2,0,array2.length-1,5));
+		System.out.println(recursiveBinarySearch(array2,0,array2.length-1,22));
 
 	}
 	
@@ -39,6 +39,7 @@ public class RecursionApp {
 	
 	//Assignment: Write an algorithm for a Binary Search Using Recursion
 	public static int recursiveBinarySearch(int[] array, int low, int high, int value){
+		System.out.println("[" + low + "......" + high + "]");
 		if( low > high){
 			return -1;
 		}
