@@ -48,9 +48,9 @@ public class InsertionSortApp {
 	
 	public static void insertionSort2(int[] array) {
 		for(int i=1;i<array.length-1;i++){
-			int unsortedElement = array[i]; //store value of index
+			int unsortedElement = array[i]; //store value of element being brought to sorted section
 			int j = i-1; //start of the sorted portion of the array
-			while(j >= 0 && array[j] > unsortedElement){ //while value in sorted section is less then value in unsorted section
+			while(j >= 0 && array[j] > unsortedElement){ //while value being added to sorted section is greater than backwards iterator
 				array[j+1] = array[j]; //swap 
 				j--; //move iterator back one sport
 			}
