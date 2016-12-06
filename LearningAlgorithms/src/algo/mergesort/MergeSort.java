@@ -10,13 +10,13 @@ public class MergeSort {
 
 	public static void sort(int[] array, int start, int end) {
 		if(end <= start){ // recursive base condition --> base condition is when all values in array are placed into individual array
-			return;
+			return; //were done traversing the array
 		}
 		
 			int mid = (start + end)/2; 
 			sort(array, start,mid); //will start spliting array left of mid point
 			sort(array,mid+1,end); //will start splitting array right of mid point
-			merge2(array,start,mid,end);
+			merge(array,start,mid,end);
 		
 	}
 
@@ -27,28 +27,30 @@ public class MergeSort {
 		
 		int leftSlot = start; //first slot of the left side of array 
 		int rightSlot = mid+1; //first slot of the right side of array
-		int k =0;
+		int k =0; //index counter for temporary sorted array
 		
 		while(leftSlot <= mid && rightSlot <= end){ //if left position exceeds middle index, then we have finished that side
 													//if right position exceeds end that we have sorted that side of array
-			if(array[leftSlot] < array[rightSlot]){
-				tempArray[k] = array[leftSlot];
-				leftSlot++;
+			
+			
+			if(array[leftSlot] < array[rightSlot]){ //check if the value of the index position on the left side of array is less than index position on right side
+				tempArray[k] = array[leftSlot]; //assign value on the left to the sorted temp array
+				leftSlot++; //move index position on left after placement
 			}
 			else{
-				tempArray[k] = array[rightSlot];
-				rightSlot++;
+				tempArray[k] = array[rightSlot]; //else assign value on the right to the sorted temp array
+				rightSlot++; // move index position on right after placement
 			}
-			k++;
+			k++; //move index position of temp array after placement from either side
 		}
 		
-		//at this point above loop has completed, so both right and left side of the sub array can be considered sorted.
+		//at this point above loop has completed, so both right and left side of the temp array can be considered sorted.
 		
 		if(leftSlot <= mid){ //consider the right side done being sorted, left must be sorted already
-			while(leftSlot <= mid){
-			tempArray[k] = array[leftSlot];
+			while(leftSlot <= mid){ //until you have place every value on left side
+			tempArray[k] = array[leftSlot];  //place in sorted array
 			leftSlot++;
-			k++;
+			k++; //increment both pointers
 			}
 		}
 		//means left side had been sorted, so right side must  already be sorted
@@ -65,37 +67,37 @@ public class MergeSort {
 		}
 	}
 
+
+public static void merge(int[] array, int start, int mid, int end) {
+int leftcenter =end-start +1; // number of indexes on left side of array
+int rightcenter = end - mid+1; //  number of indexes on right side of array
+
+int[] L = new int[leftcenter+1]; //left side of array with extra spot
+int[] R = new int[rightcenter+1]; // right side of array with extra spot
+
+for(int i = 0; i < leftcenter; i++){
+	L[i] = array[start +i]; //populate almost all of  Left Side
 }
-//public static void merge(int[] array, int start, int mid, int end) {
-//int leftcenter =end-start +1; // number of indexes on left side of array
-//int rightcenter = end - mid; //  number of indexes on right side of array
-//
-//int[] L = new int[leftcenter+1]; //left side of array with extra spot
-//int[] R = new int[rightcenter+1]; // right side of array with extra spot
-//
-//for(int i = 0; i < leftcenter; i++){
-//	L[i] = array[start +i-1]; //populate almost all of  Left Side
-//}
-//
-//for(int j = 0; j < rightcenter; j++){
-//	R[j] = array[mid+j]; // populate almost all of Right Side
-//}
-//L[leftcenter] = 100000000; //last slot in L
-//R[rightcenter] = 100000000; //lsat slot in R
-//
-//
-//int I = 0;
-//int J = 0;
-//for(int k = start; start < end;k++ ){
-//	if(L[I] > R[J]){
-//		array[k] = L[I];
-//		I = I+1;
-//	}
-//	else{
-//		array[k] = R[J];
-//		J = J+1;
-//	}
-//}
-//
-//
-//}
+
+for(int j = 0; j < rightcenter; j++){
+	R[j] = array[mid+j]; // populate almost all of Right Side
+}
+L[leftcenter] = 100000000; //last slot in L
+R[rightcenter] = 100000000; //lsat slot in R
+
+
+int I = 0;
+int J = 0;
+for(int k = 0; k < array.length;k++ ){
+	if(L[I] < R[J]){
+		array[k] = L[I];
+		I++;
+	}
+	else{
+		array[k] = R[J];
+		J++;
+	}
+}
+
+}
+}
