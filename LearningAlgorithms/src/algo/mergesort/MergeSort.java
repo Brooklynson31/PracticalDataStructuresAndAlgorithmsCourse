@@ -1,10 +1,11 @@
 package algo.mergesort;
 
 public class MergeSort {
-
+	 public static int tempArray[];
 	
 	public void sort(int[] array) {
 		sort(array,0,array.length-1); // 2nd argument is the start and the 3rd argument is the end
+		
 		
 	}
 
@@ -12,17 +13,17 @@ public class MergeSort {
 		if(end <= start){ // recursive base condition --> base condition is when all values in array are placed into individual array
 			return; //were done traversing the array
 		}
-		
+		tempArray = new int [array.length];
 			int mid = (start + end)/2; 
 			sort(array, start,mid); //will start spliting array left of mid point
 			sort(array,mid+1,end); //will start splitting array right of mid point
-			merge(array,start,mid,end);
+			mergeInPlace(array,start,mid,end);
 		
 	}
 
 
 	
-	private static void merge2(int[] array, int start, int mid, int end){
+	private static void merge(int[] array, int start, int mid, int end){
 		int tempArray[] = new int[end-start+1]; //temp array to hold the sorted values +1 because end index only gives total length-1
 		
 		int leftSlot = start; //first slot of the left side of array 
@@ -66,38 +67,39 @@ public class MergeSort {
 			array[start+i] = tempArray[i];
 		}
 	}
+	
+//private static int tempArray[];//an array used for merging
+//To use the mergeInPlace() method you'll need to intialize as
+//shown on the next line inside of the wrapper sort() method
+//tempArray = new int [array.length];
 
-
-public static void merge(int[] array, int start, int mid, int end) {
-int leftcenter =end-start +1; // number of indexes on left side of array
-int rightcenter = end - mid+1; //  number of indexes on right side of array
-
-int[] L = new int[leftcenter+1]; //left side of array with extra spot
-int[] R = new int[rightcenter+1]; // right side of array with extra spot
-
-for(int i = 0; i < leftcenter; i++){
-	L[i] = array[start +i]; //populate almost all of  Left Side
-}
-
-for(int j = 0; j < rightcenter; j++){
-	R[j] = array[mid+j]; // populate almost all of Right Side
-}
-L[leftcenter] = 100000000; //last slot in L
-R[rightcenter] = 100000000; //lsat slot in R
-
-
-int I = 0;
-int J = 0;
-for(int k = 0; k < array.length;k++ ){
-	if(L[I] < R[J]){
-		array[k] = L[I];
-		I++;
+public static void mergeInPlace(int inputArray[], int start, int mid, int end){
+	int i = start;
+	int j = mid+1;
+	
+	for(int k = 0; k <= end;k++){
+		tempArray[k] = inputArray[k];
 	}
-	else{
-		array[k] = R[J];
-		J++;
+	
+	for (int k = start; k <= end; k++){
+		if(i > mid){
+			inputArray[k] = tempArray[j];
+			j++;
+		} else if(j > end){
+			inputArray[k] = tempArray[i];
+			i++;
+		} else if (tempArray[j] < tempArray[i]){
+			inputArray[k] = tempArray[j];
+			j++;
+		}
+		else {
+			inputArray[k] = tempArray[i];
+			i++;
+		}
+		
 	}
 }
 
+
 }
-}
+
