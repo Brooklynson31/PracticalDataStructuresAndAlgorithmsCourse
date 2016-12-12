@@ -19,6 +19,31 @@ public class GraphApp {
 		for(Object val : values){
 		System.out.println(val);
 		}
+		//design a better grapgh
+		LinkedListGraph newGraph = new LinkedListGraph(5, "directed");
+		newGraph.addVertex("State");
+		newGraph.addVertex("Avenel");
+		newGraph.addVertex("Elm");
+		newGraph.addVertex("Pocono");
+		newGraph.addVertex("William");
+		
+		newGraph.addEdge("Avenel", "Pocono");
+		newGraph.addEdge("State", "Elm");
+		newGraph.addEdge("Elm", "Avenel");
+		newGraph.addEdge("Elm", "William");
+		newGraph.addEdge("William", "State");
+		newGraph.addEdge("William", "Pocono");
+		newGraph.addEdge("Pocono", "Elm");
+		newGraph.addEdge("State", "Avenel");
+		
+		newGraph.print();
+
+
+		
+
+		
 	}
+
+
 
 }
