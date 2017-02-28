@@ -30,17 +30,17 @@ public class BreadthFirstTraversal {
         breadthFirst2(a);
 	}
 	
-	public static void breadthFirst2(Node root){
+	public static void breadthFirst2(Node<Character> root){
 		if(root == null) //null root indicates nothing to traverse
 			return;
 		
 		
 		
-		Queue<Node> queue = new LinkedList<Node>();
+		Queue<Node<Character>> queue = new LinkedList<Node<Character>>();
 		queue.add(root);  //set up a queue and start by enqueueing the root node
 		
 		while(!queue.isEmpty()){ //As long as the queue is not empty, process the Node at the head of the queue
-			Node node = queue.remove();
+			Node<Character> node = queue.remove();
 			System.out.println(node.getData());
 			
 			if(node.getLeftChild() != null){ // adding the left child first ensures that the nodes at the Same Level are processed from left to right

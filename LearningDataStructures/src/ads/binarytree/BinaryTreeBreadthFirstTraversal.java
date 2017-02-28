@@ -31,7 +31,7 @@ public class BinaryTreeBreadthFirstTraversal {
         System.out.print(node.getData() + "->");
     }
 
-    public static void breadthFirst(Node root) throws
+    public static void breadthFirst(Node<Character> root) throws
             Queue.QueueUnderflowException, Queue.QueueOverflowException {
         if (root == null) {
             return;
@@ -40,7 +40,7 @@ public class BinaryTreeBreadthFirstTraversal {
         Queue<Node> queue = new Queue<>(Node.class);
         queue.enqueue(root);
         while (!queue.isEmpty()) {
-            Node node = queue.dequeue();
+            Node<Character> node = queue.dequeue();
             print(node);
 
             if (node.getLeftChild() != null) {
