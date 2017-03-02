@@ -11,7 +11,7 @@ public class PreOrderDepthFirstTraversal {
 		Node<Character> e = new Node<>('E');
 		Node<Character> f = new Node<>('F');
 		Node<Character> g = new Node<>('G');
-		Node<Character> h = new Node<>('H');
+//		Node<Character> h = new Node<>('H');
 		
 //		a.setLeftChild(b);
 //		a.setRightChild(c);
