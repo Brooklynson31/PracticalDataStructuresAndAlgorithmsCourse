@@ -43,5 +43,18 @@ public class MaxDepth {
 			}
 		
 	}
+	
+	public static int maxDepth2(Node<Character> root){
+		if(root == null) return 0; //base case, if the root is null then the tree has no nodes, the max depth is 0
+		
+		if(root.getData() == null && root.getRightChild() == null){ //if both the left and right child of the node is null
+			return 0;										//then this is a leaf and has a depth of 0
+		}
+		
+		int leftMaxDepth = 1 + maxDepth2(root.getLeftChild()); //Find the max depth on the left and right subtrees
+		int rightMaxDepth = 1 + maxDepth2(root.getRightChild()); //add 1 to account for the current tree depth of the tree
+		
+		return Math.max(leftMaxDepth, rightMaxDepth); //find the max depth between the left and right subtrees
+	}
 
 }
