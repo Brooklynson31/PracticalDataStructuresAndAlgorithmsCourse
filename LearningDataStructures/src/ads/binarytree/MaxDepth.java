@@ -47,7 +47,7 @@ public class MaxDepth {
 	public static int maxDepth2(Node<Character> root){
 		if(root == null) return 0; //base case, if the root is null then the tree has no nodes, the max depth is 0
 		
-		if(root.getData() == null && root.getRightChild() == null){ //if both the left and right child of the node is null
+		if(root.getLeftChild() == null && root.getRightChild() == null){ //if both the left and right child of the node is null
 			return 0;										//then this is a leaf and has a depth of 0
 		}
 		
