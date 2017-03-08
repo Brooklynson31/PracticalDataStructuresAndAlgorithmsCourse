@@ -48,14 +48,14 @@ public class MirrorABinaryTree {
 	}
 	
 	public static void mirror(Node<Character> root){
-		if(root == null) return;
+		if(root == null) return; //base case, if the head is null then the tree has no nodes, there is nothing to mirror
 		
 		mirror(root.getLeftChild());
-		mirror(root.getRightChild());
-		
+		mirror(root.getRightChild()); //call mirror recursively on every node in the left and right sub-trees
+		//swap the elft and right children of this node
 		Node<Character> temp = root.getLeftChild();
 		root.setLeftChild(root.getRightChild());
-		root.setRightChild(temp);
+		root.setRightChild(temp); //swap the left and right children of this node
 		
 	}
 
