@@ -25,9 +25,12 @@ public class PrintNodesWithinRange {
 	      e.setRightChild(g);
 	      b.setLeftChild(x);
 	      
-	      printRange(a, 0, 10);
+	      printRange(a, 10, 20);
+
+	      printRange2(a, 10, 20);
 	}
 	
+	//prints nodes according to how they appear in breadth first search
 	public static void printRange(Node<Integer> head, int low, int high){
 	if(head == null) return;	
 	
@@ -38,8 +41,21 @@ public class PrintNodesWithinRange {
 		printRange(head.getLeftChild(), low, high);
 	if(head.getData() <= high)
 		printRange(head.getRightChild(),low,high);
+	}
+	
+	//--> prints node values in numerical order
+	public static void printRange2(Node<Integer> root, int low, int high){ //pass in the min and max indicating the range we care about
 		
-		
+	if(root == null) return; //bse case, nothing to do for a null root
+	
+	if(low <= root.getData())
+		printRange2(root.getLeftChild(),low,high); //if the range low value is less than the current node, run the operation on the left subtree
+	
+	if(low <= root.getData() && root.getData() <= high) //check the node value to see if its within the range, if yes, print
+		System.out.println(root.getData());
+	
+	if(high > root.getData())
+		printRange2(root.getRightChild(), low, high); //if the range high value is greater than the current node, run the oepration on the right subtree
 		
 		
 	}
