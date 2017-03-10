@@ -14,8 +14,6 @@ public class PrintNodesWithinRange {
 	      Node<Integer> h = new Node<>(17);
 	      Node<Integer> x = new Node<>(3);
 
-	      
-
 	      a.setLeftChild(b);
 	      a.setRightChild(c);
 	      c.setLeftChild(d);
