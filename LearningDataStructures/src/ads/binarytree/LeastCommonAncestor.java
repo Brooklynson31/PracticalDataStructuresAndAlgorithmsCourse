@@ -23,7 +23,7 @@ public class LeastCommonAncestor {
 		e.setRightChild(g);
 		
 		//System.out.println(lca(a,e,f));
-		lca(a,f,e);
+		lca(a,b,b);
 		
 	}
 	
