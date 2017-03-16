@@ -3,7 +3,6 @@ package ads.binarytree;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import ads.binarytree.BinaryTreeBreadthFirstTraversal.Node;
 
 public class BreadthFirstTraversal {
 

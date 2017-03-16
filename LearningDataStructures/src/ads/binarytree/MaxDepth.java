@@ -1,6 +1,5 @@
 package ads.binarytree;
 
-import ads.binarytree.BinaryTreeBreadthFirstTraversal.Node;
 
 public class MaxDepth {
 

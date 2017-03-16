@@ -1,12 +1,11 @@
 package ads.binarytree;
 
-import ads.binarytree.BinaryTreeBreadthFirstTraversal.Node;
 import ads.binarytree.Queue.QueueOverflowException;
 import ads.binarytree.Queue.QueueUnderflowException;
 
 public class MirrorABinaryTree {
 
-	public static void main(String[] args) throws QueueUnderflowException, QueueOverflowException {
+	public static void main(String[] args) throws QueueUnderflowException, QueueOverflowException  {
 		Node<Character> a = new Node<>('A');
         Node<Character> b = new Node<>('B');
         Node<Character> c = new Node<>('C');

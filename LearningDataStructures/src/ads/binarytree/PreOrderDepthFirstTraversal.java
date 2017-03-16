@@ -24,10 +24,10 @@ public class PreOrderDepthFirstTraversal {
 		
 		a.setLeftChild(b);
 		a.setRightChild(c);
-		b.setLeftChild(d);
-		b.setRightChild(e);
-		c.setLeftChild(f);
-		c.setRightChild(g);
+//		b.setLeftChild(d);
+//		b.setRightChild(e);
+//		c.setLeftChild(f);
+//		c.setRightChild(g);
 		
 		preOrder(a);
 		

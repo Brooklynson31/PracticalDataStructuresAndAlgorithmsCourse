@@ -14,11 +14,11 @@ public class PostOrderDepthFirstTraversal {
 		
 		a.setLeftChild(b);
 		a.setRightChild(c);
-		c.setLeftChild(d);
-		c.setRightChild(e);
-		d.setLeftChild(f);
-		d.setRightChild(h);
-		e.setRightChild(g);
+//		c.setLeftChild(d);
+//		c.setRightChild(e);
+//		d.setLeftChild(f);
+//		d.setRightChild(h);
+//		e.setRightChild(g);
 		
 		postOrder(a);
 	}

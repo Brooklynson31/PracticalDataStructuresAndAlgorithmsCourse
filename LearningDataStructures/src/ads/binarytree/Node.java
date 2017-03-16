@@ -2,6 +2,8 @@ package ads.binarytree;
 
 public class Node<T> {
 	
+	
+
 	private T data;
 	private Node<T> leftChild;
 	private Node<T> rightChild;
@@ -28,6 +30,10 @@ public class Node<T> {
 
 	public T getData() {
 		return data;
+	}
+	
+	public void setData(T data) {
+		this.data = data;
 	}
 
 	@Override

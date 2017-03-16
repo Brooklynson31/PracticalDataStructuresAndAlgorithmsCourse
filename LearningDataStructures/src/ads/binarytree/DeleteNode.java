@@ -3,7 +3,6 @@ package ads.binarytree;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import ads.binarytree.BinaryTreeBreadthFirstTraversal.Node;
 
 public class DeleteNode {
 
@@ -16,9 +15,9 @@ public class DeleteNode {
 	      Node<Integer> f = new Node<>(14);
 	      Node<Integer> g = new Node<>(30);
 	      Node<Integer> h = new Node<>(17);
-	      Node<Integer> x = new Node<>(3);
+	   //   Node<Integer> x = new Node<>(3);
 
-		
+	
 		a.setLeftChild(b);
 		a.setRightChild(c);
 		c.setLeftChild(d);
@@ -27,59 +26,120 @@ public class DeleteNode {
 		d.setRightChild(h);
 		e.setRightChild(g);
 		
-		breadthFirst(a);
+		//System.out.println(delete(a,h));
+		//breadthFirst(a);
+		
+		breadthFirst(delete(a,h));
+
 
 
 	}
 	
-	public static Node<Integer> delete(Node<Integer> root, Node<Integer> target){
+	//Main method in Delete node process
+	public static Node<Integer> delete(Node<Integer> root, Node<Integer> targetNode){
 		if(root == null) return null;
 		
-		if(root == target) return root;
+		Node<Integer> parent = root; //always keep track of the parent node
 		
-		Node<Integer> found = new Node<Integer>(null);
+		//lookup node to be deleted
+		Node<Integer> nodeToDeleteLeft = lookUp(parent.getLeftChild(),targetNode.getData()); //look in the left subtree for the node to be deleted
+		Node<Integer> nodeToDeleteRight = lookUp(parent.getRightChild(),targetNode.getData()); //look in the right subtree for node to be deleted
 		
+		//store the value of the node to be deleted and its parent if they exists
+		Node<Integer> nodeToBeDeleted = new Node<>(null);
+		if(nodeToDeleteLeft != null) //node to be deleted was found in left subtree
+			nodeToBeDeleted = nodeToDeleteLeft;
+			//parent = findParent(root, nodeToBeDeleted);
+		else if(nodeToDeleteRight != null) //node to be deleted was found in right subtree
+			nodeToBeDeleted= nodeToDeleteRight;
+		else if (root == targetNode){ //node to be deleted is the root
+			nodeToBeDeleted = root;
+		} else {
+			return null; //node to be deleted does not exist in BST
+		}
 	
-		if(root.getData() <= target.getData())
-			found = delete(root.getLeftChild(),target);
-		else if(root.getData() > target.getData())
-			found = delete(root.getRightChild(),target);
-		
+		//check how many children the node to be deleted has
+		if(nodeToBeDeleted.getLeftChild() != null && nodeToBeDeleted.getRightChild() != null){ //node to be dleted has 2 children
+		//	Node<Integer> temp = nodeToBeDeleted;
 			
-		if((found.getLeftChild() == null && found.getRightChild() == null) || found.getLeftChild() == null ) {
-			root.setLeftChild(leftSub(found));
-		}
 			
-		if(found.getRightChild() == null){
-			root.setRightChild(rightSub(found));
+			
+		} else if (nodeToBeDeleted.getLeftChild() != null){ //node to be deleted only has a left child
+//			Node<Integer> temp =  root.getLeftChild(); //hold the values of left and right subtrees of node to be swappped
+//			
+//			Node<Integer> swapNode = swapLeftSub(parent); //get the node with the biggest value in left subtree
+//			parent.setLeftChild(swapNode); //swap node to be deleted 
+//			
+//			swapNode.setLeftChild(temp.getLeftChild()); //set left and right subtrees of newly swapped node to be same as
+//			swapNode.setRightChild(temp.getRightChild()); //node that was swapped out
+		
+		} else if (nodeToBeDeleted.getRightChild()!= null ){ //node to be deleted only has a rigth child
+			Node<Integer> temp =  nodeToBeDeleted; //hold the values of left and right subtrees of node to be swappped
+			
+			Node<Integer> swapNode = swapSmallValueRightSub(nodeToBeDeleted.getRightChild()); //get the node with the biggest value in left subtree
+			parent.setRightChild(swapNode); //swap node to be deleted 
+			
+			swapNode.setLeftChild(temp.getLeftChild()); //set left and right subtrees of newly swapped node to be same as
+			swapNode.setRightChild(temp.getRightChild()); //node that was swapped out
+			
+		} else { //node to be deleted is a leaf node
+			
 		}
 		
-		return null;
+		//remove
+		removeNode(parent,nodeToBeDeleted);
+	
+		
+		return parent;
 	}
 	
-	public static Node<Integer> leftSub(Node<Integer> head){ //search for biggest value in left subtree
-		if(head == null) return null;
-		
+	
+	public static Node<Integer> swapLargestValueLeftSub(Node<Integer> head){ //retrieves larget value in left subtree
+	
 		if(head.getRightChild() != null){
-			  leftSub(head.getRightChild());
+			swapLargestValueLeftSub(head.getRightChild());
 		}
 	
 		return head;
 	}
 	
-	public static Node<Integer> rightSub(Node<Integer> head){ //search for biggest value in left subtree
-		if(head == null) return null;
-		
-		if(head.getLeftChild() != null){
-			  rightSub(head.getLeftChild());
-		}
-	
+	public static Node<Integer> swapSmallValueRightSub(Node<Integer> head){ //retrieves  smallest value in right subtree
+		if(head.getLeftChild() != null)
+			swapSmallValueRightSub(head.getLeftChild()); //
 		return head;
 	}
-	
-	public static void swap(Node<Integer> head){
+	//returns parent of Node to be deleted
+	public static Node<Integer> findParent(Node<Integer> head, Node<Integer> target){
+		if(head.getLeftChild() == target || head.getRightChild() == target)
+			return head;
+		 
+		
+		if(target.getData() <= head.getData()) //if the lookup value is smaller than or equal to the head
+			 removeNode(head.getLeftChild(),target); //lookup the left subtree
+		else
+			removeNode(head.getRightChild(), target); //otherwise lookup the right subtree
+		return head;
+		
 		
 	}
+	
+	public static void removeNode(Node<Integer> head,Node<Integer> target){ // deletes the node we are searching for 
+		if(head.getLeftChild() == target){
+			head.setLeftChild(null);
+			return;
+		} else if (head.getRightChild() == target){
+			head.setRightChild(null);
+			return;
+		}
+				
+		
+		if(target.getData() <= head.getData()) //if the lookup value is smaller than or equal to the head
+			 removeNode(head.getLeftChild(),target); //lookup the left subtree
+		else
+			 removeNode(head.getRightChild(), target); //otherwise lookup the right subtree
+	}
+	
+	
 	
 	public static Node<Integer> lookUp(Node<Integer> head, int data){
 		if(head == null)
@@ -118,6 +178,8 @@ public class DeleteNode {
 		}
 		
 	}
+	
+	
 
 
 }
