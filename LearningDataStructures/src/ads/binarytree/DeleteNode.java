@@ -15,109 +15,111 @@ public class DeleteNode {
 	      Node<Integer> f = new Node<>(14);
 	      Node<Integer> g = new Node<>(30);
 	      Node<Integer> h = new Node<>(17);
-	   //   Node<Integer> x = new Node<>(3);
+	      Node<Integer> x = new Node<>(3);
 
 	
 		a.setLeftChild(b);
 		a.setRightChild(c);
+		b.setLeftChild(x);
 		c.setLeftChild(d);
 		c.setRightChild(e);
 		d.setLeftChild(f);
 		d.setRightChild(h);
 		e.setRightChild(g);
 		
-		//System.out.println(delete(a,h));
-		//breadthFirst(a);
 		
-		breadthFirst(delete(a,h));
+		breadthFirst(delete(a,d));
 
-
+	
 
 	}
 	
 	//Main method in Delete node process
 	public static Node<Integer> delete(Node<Integer> root, Node<Integer> targetNode){
+
 		if(root == null) return null;
 		
-		Node<Integer> parent = root; //always keep track of the parent node
+		Node<Integer> nodeToBeDeleted = lookUp(root,targetNode.getData()); //search for node to be deleted
 		
-		//lookup node to be deleted
-		Node<Integer> nodeToDeleteLeft = lookUp(parent.getLeftChild(),targetNode.getData()); //look in the left subtree for the node to be deleted
-		Node<Integer> nodeToDeleteRight = lookUp(parent.getRightChild(),targetNode.getData()); //look in the right subtree for node to be deleted
+		if(nodeToBeDeleted == null) return null; //node we want to delete does not exist in tree
 		
-		//store the value of the node to be deleted and its parent if they exists
-		Node<Integer> nodeToBeDeleted = new Node<>(null);
-		if(nodeToDeleteLeft != null) //node to be deleted was found in left subtree
-			nodeToBeDeleted = nodeToDeleteLeft;
-			//parent = findParent(root, nodeToBeDeleted);
-		else if(nodeToDeleteRight != null) //node to be deleted was found in right subtree
-			nodeToBeDeleted= nodeToDeleteRight;
-		else if (root == targetNode){ //node to be deleted is the root
-			nodeToBeDeleted = root;
-		} else {
-			return null; //node to be deleted does not exist in BST
-		}
+		Node<Integer> parent = findParent(root,nodeToBeDeleted); //find parent nsearch forode of node to be deleted and keep track of it
+		
 	
 		//check how many children the node to be deleted has
 		if(nodeToBeDeleted.getLeftChild() != null && nodeToBeDeleted.getRightChild() != null){ //node to be dleted has 2 children
-		//	Node<Integer> temp = nodeToBeDeleted;
+			//store the nodes that represent left and right subtrees of the node to be deleted
+			Node<Integer> deleteNodeLeftChild =  nodeToBeDeleted.getLeftChild(); //root node in left subtree of node to be deleted
+			Node<Integer> deleteNodeRightChild =  nodeToBeDeleted.getRightChild(); //root node in right subtree of node to be deleted
 			
-			
-			
-		} else if (nodeToBeDeleted.getLeftChild() != null){ //node to be deleted only has a left child
-//			Node<Integer> temp =  root.getLeftChild(); //hold the values of left and right subtrees of node to be swappped
-//			
-//			Node<Integer> swapNode = swapLeftSub(parent); //get the node with the biggest value in left subtree
-//			parent.setLeftChild(swapNode); //swap node to be deleted 
-//			
-//			swapNode.setLeftChild(temp.getLeftChild()); //set left and right subtrees of newly swapped node to be same as
-//			swapNode.setRightChild(temp.getRightChild()); //node that was swapped out
-		
-		} else if (nodeToBeDeleted.getRightChild()!= null ){ //node to be deleted only has a rigth child
-			Node<Integer> temp =  nodeToBeDeleted; //hold the values of left and right subtrees of node to be swappped
-			
-			Node<Integer> swapNode = swapSmallValueRightSub(nodeToBeDeleted.getRightChild()); //get the node with the biggest value in left subtree
-			parent.setRightChild(swapNode); //swap node to be deleted 
-			
-			swapNode.setLeftChild(temp.getLeftChild()); //set left and right subtrees of newly swapped node to be same as
-			swapNode.setRightChild(temp.getRightChild()); //node that was swapped out
-			
-		} else { //node to be deleted is a leaf node
-			
-		}
-		
-		//remove
-		removeNode(parent,nodeToBeDeleted);
+			//search for the biggest node in the left subtree of the node to be deleted
+			Node<Integer> swapNode = swapLargestValueLeftSub(nodeToBeDeleted.getLeftChild()); //store node we are swapping
 	
+			//find the parent of the node we are swapping with the node we are deleting
+			Node<Integer> parentSwap = findParent(root, swapNode); //parent of node with highest value in left subtree
+			
+			if(parentSwap == nodeToBeDeleted){
+				//check to see if node we are deleting has two leaf nodes or not
+			} else {
+				
+			}
+			
+			//set the parent of the node that we are deleting to point to swap node replacing the node we are deleting in tree
+			if(parent.getLeftChild() == nodeToBeDeleted){ 
+				parent.setLeftChild(swapNode);
+			} else if (parent.getRightChild() == nodeToBeDeleted){
+				parent.setRightChild(swapNode); //replace node we are delete with node we are swapping it with
+			}
+			
+			//replace the larget value in left subtree with node we are deleted
+			if(parentSwap.getLeftChild() == swapNode){
+				parentSwap.setLeftChild(null);
+			} else {
+				parentSwap.setRightChild(null);
+			}
+			
 		
-		return parent;
+			swapNode.setLeftChild(deleteNodeLeftChild);
+			swapNode.setRightChild(deleteNodeRightChild);
+
+	
+			
+		} else if (nodeToBeDeleted.getLeftChild() != null || nodeToBeDeleted.getRightChild() != null){ //node to be deleted only has a left child
+			if(nodeToBeDeleted.getLeftChild() != null)
+				parent.setLeftChild(nodeToBeDeleted.getLeftChild());
+			 else 
+				parent.setRightChild(nodeToBeDeleted.getRightChild());
+		} else {
+			removeNode(root,nodeToBeDeleted);
+		}
+
+		return root;
 	}
 	
 	
 	public static Node<Integer> swapLargestValueLeftSub(Node<Integer> head){ //retrieves larget value in left subtree
-	
-		if(head.getRightChild() != null){
-			swapLargestValueLeftSub(head.getRightChild());
-		}
-	
+		if(head.getRightChild() != null)
+			head = swapLargestValueLeftSub(head.getRightChild());
 		return head;
 	}
 	
 	public static Node<Integer> swapSmallValueRightSub(Node<Integer> head){ //retrieves  smallest value in right subtree
 		if(head.getLeftChild() != null)
-			swapSmallValueRightSub(head.getLeftChild()); //
+			head = swapSmallValueRightSub(head.getLeftChild()); //
 		return head;
 	}
-	//returns parent of Node to be deleted
-	public static Node<Integer> findParent(Node<Integer> head, Node<Integer> target){
+	
+	
+	//returns parent of 2nd paramter
+	public static Node<Integer> findParent(Node<Integer> head, Node<Integer> target){//2nd parameter is who's parent we are looking for
 		if(head.getLeftChild() == target || head.getRightChild() == target)
 			return head;
 		 
 		
 		if(target.getData() <= head.getData()) //if the lookup value is smaller than or equal to the head
-			 removeNode(head.getLeftChild(),target); //lookup the left subtree
+			head = findParent(head.getLeftChild(),target); //lookup the left subtree
 		else
-			removeNode(head.getRightChild(), target); //otherwise lookup the right subtree
+			 head = findParent(head.getRightChild(), target); //otherwise lookup the right subtree
 		return head;
 		
 		
