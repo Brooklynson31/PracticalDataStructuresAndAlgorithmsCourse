@@ -1,50 +1,26 @@
 package ads.binarytree;
 
-
-
-public class DeleteBST {
-	
-
-	public static void main(String[] args) {
-			TreeNode<Integer> z = new TreeNode<>(5);
-		 TreeNode<Integer> a = new TreeNode<>(13);
-	      TreeNode<Integer> b = new TreeNode<>(5);
-	      TreeNode<Integer> c = new TreeNode<>(18);
-	      TreeNode<Integer> d = new TreeNode<>(15);
-	      TreeNode<Integer> e = new TreeNode<>(27);
-	      TreeNode<Integer> f = new TreeNode<>(14);
-	      TreeNode<Integer> g = new TreeNode<>(30);
-	      TreeNode<Integer> h = new TreeNode<>(17);
-	      TreeNode<Integer> x = new TreeNode<>(3);
-	      TreeNode<Integer> bb = new TreeNode<>(10);
-
-
-	
-		a.setLeftChild(b);
-		a.setRightChild(c);
-		b.setLeftChild(x);
-		b.setRightChild(bb);
-		c.setLeftChild(d);
-		c.setRightChild(e);
-		d.setLeftChild(f);
-		d.setRightChild(h);
-		e.setRightChild(g);
-		
-		
-		delete(a,3);
-
-	
-
-	}
-	
-	//Main method in Delete node process
-	public static TreeNode<Integer> delete(TreeNode<Integer> root, int target){
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public TreeNode deleteNode(TreeNode root, int key) {
+        return delete(root,key);
+    }
+    
+    	public static TreeNode delete(TreeNode root, int target){
 
 		if(root == null) return null;
 		
-		TreeNode<Integer> targetNode = new TreeNode<>(target);
+		TreeNode targetNode = new TreeNode(target);
 		
-		TreeNode<Integer> nodeToBeDeleted = lookUp(root,targetNode.getData()); //search for node to be deleted
+		TreeNode nodeToBeDeleted = lookUp(root,targetNode.getData()); //search for node to be deleted
 		
 		if(nodeToBeDeleted == null) return null; //node we want to delete does not exist in tree
 		
@@ -53,20 +29,20 @@ public class DeleteBST {
 
 		} else {
 		
-			TreeNode<Integer> deleteParent = findParent(root,nodeToBeDeleted); //find parent nsearch forode of node to be deleted and keep track of it
+			TreeNode deleteParent = findParent(root,nodeToBeDeleted); //find parent nsearch forode of node to be deleted and keep track of it
 			
 			
 			
 			//check how many children the node to be deleted has
 			if(nodeToBeDeleted.getLeftChild() != null && nodeToBeDeleted.getRightChild() != null){ //node to be dleted has 2 children
 					//store the nodes that represent left and right subtrees of the node to be deleted
-					TreeNode<Integer> deleteNodeLeftChild =  nodeToBeDeleted.getLeftChild(); //root node in left subtree of node to be deleted
-					TreeNode<Integer> deleteNodeRightChild =  nodeToBeDeleted.getRightChild(); //root node in right subtree of node to be deleted
+					TreeNode deleteNodeLeftChild =  nodeToBeDeleted.getLeftChild(); //root node in left subtree of node to be deleted
+					TreeNode deleteNodeRightChild =  nodeToBeDeleted.getRightChild(); //root node in right subtree of node to be deleted
 				
 					//search for the biggest node in the left subtree of the node to be deleted
-					TreeNode<Integer> replaceNode = swapLargestValueLeftSub(nodeToBeDeleted.getLeftChild()); //store node we are swapping
+					TreeNode replaceNode = swapLargestValueLeftSub(nodeToBeDeleted.getLeftChild()); //store node we are swapping
 				
-					TreeNode<Integer> replaceParent = findParent(root, replaceNode); //parent of node with highest value in left subtree
+					TreeNode replaceParent = findParent(root, replaceNode); //parent of node with highest value in left subtree
 				
 				
 					if(replaceParent.getLeftChild() == replaceNode){
@@ -102,15 +78,15 @@ public class DeleteBST {
 		return root;
 	}
 
-	private static TreeNode<Integer> deleteRootNode(TreeNode<Integer> root) {
+	private  TreeNode deleteRootNode(TreeNode root) {
 		//store the nodes that represent left and right subtrees of the node to be deleted
-		TreeNode<Integer> rootNodeLeftChild =  root.getLeftChild(); //root node in left subtree of node to be deleted
-		TreeNode<Integer> rootNodeRightChild =  root.getRightChild(); //root node in right subtree of node to be deleted
+		TreeNode rootNodeLeftChild =  root.getLeftChild(); //root node in left subtree of node to be deleted
+		TreeNode rootNodeRightChild =  root.getRightChild(); //root node in right subtree of node to be deleted
 
 		//search for the biggest node in the left subtree of the node to be deleted
-		TreeNode<Integer> swapNode = swapLargestValueLeftSub(root.getLeftChild()); //store node we are swapping
+		TreeNode swapNode = swapLargestValueLeftSub(root.getLeftChild()); //store node we are swapping
 		
-		TreeNode<Integer> parentSwap = findParent(root, swapNode); //parent of node with highest value in left subtree
+		TreeNode parentSwap = findParent(root, swapNode); //parent of node with highest value in left subtree
 		
 		
 		//delete node with largest value from left subtree od delete node
@@ -129,7 +105,7 @@ public class DeleteBST {
 	}
 	
 	
-	public static TreeNode<Integer> swapLargestValueLeftSub(TreeNode<Integer> head){ //retrieves larget value in left subtree
+	public  TreeNode swapLargestValueLeftSub(TreeNode head){ //retrieves larget value in left subtree
 		if(head.getRightChild() != null)
 			head = swapLargestValueLeftSub(head.getRightChild());
 		return head;
@@ -139,7 +115,7 @@ public class DeleteBST {
 	
 	
 	//returns parent of 2nd paramter
-	public static TreeNode<Integer> findParent(TreeNode<Integer> head, TreeNode<Integer> target){//2nd parameter is who's parent we are looking for
+	public  TreeNode findParent(TreeNode head, TreeNode target){//2nd parameter is who's parent we are looking for
 		if(head.getLeftChild() == target || head.getRightChild() == target)
 			return head;
 		 
@@ -153,7 +129,7 @@ public class DeleteBST {
 		
 	}
 	
-	public static void removeNode(TreeNode<Integer> head,TreeNode<Integer> target){ // deletes the node we are searching for 
+	public  void removeNode(TreeNode head,TreeNode target){ // deletes the node we are searching for 
 		if(head.getLeftChild() == target){
 			head.setLeftChild(null);
 			return;
@@ -171,7 +147,7 @@ public class DeleteBST {
 	
 	
 	
-	public static TreeNode<Integer> lookUp(TreeNode<Integer> head, int data){
+	public  TreeNode lookUp(TreeNode head, int data){
 		if(head == null)
 			return null; //base case, if the head null the node has not been found; return null
 		
@@ -188,46 +164,41 @@ public class DeleteBST {
 	
 
 }
-class TreeNode<T> {
+class TreeNode {
 	
 	
 
-	private T data;
-	private TreeNode<T> leftChild;
-	private TreeNode<T> rightChild;
+	private int data;
+	private TreeNode leftChild;
+	private TreeNode rightChild;
 	
-	public TreeNode(T data){
+	public TreeNode(int data){
 		this.data = data;
 	}
 
-	public TreeNode<T> getLeftChild() {
+	public TreeNode getLeftChild() {
 		return leftChild;
 	}
 
-	public void setLeftChild(TreeNode<T> leftChild) {
+	public void setLeftChild(TreeNode leftChild) {
 		this.leftChild = leftChild;
 	}
 
-	public TreeNode<T> getRightChild() {
+	public TreeNode getRightChild() {
 		return rightChild;
 	}
 
-	public void setRightChild(TreeNode<T> rightChild) {
+	public void setRightChild(TreeNode rightChild) {
 		this.rightChild = rightChild;
 	}
 
-	public T getData() {
+	public int getData() {
 		return data;
 	}
 	
-	public void setData(T data) {
+	public void setData(int data) {
 		this.data = data;
 	}
 
-	@Override
-	public String toString() {
-		return "data=" + data + ", leftChild=" + leftChild + ", rightChild=" + rightChild;
-	}
+	
 }
-
-
